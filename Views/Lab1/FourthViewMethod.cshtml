@@ -1,0 +1,23 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "FourthViewMethod";
+}
+
+<h2>FourthViewMethod</h2>
+<h4>Список овощей, отсортированный по длине названия</h4>
+
+<table class="table" style="width:min-content" border="1">
+    <thead>
+        <tr><th>Овощ</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var vegetable in Model)
+        {
+            <tr><td>@vegetable</td></tr>
+        }
+    </tbody>
+
+
+    </table>
+
+

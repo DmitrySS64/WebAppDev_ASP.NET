@@ -26,6 +26,12 @@ namespace LW_1.Controllers
             return View(GetVegetablesList().OrderBy(x => x).ToList());
         }
 
+        public ActionResult FourthViewMethod()
+        {
+            List<string> vegatables = GetVegetablesList();
+            return View(vegatables.OrderBy(x=>x.Length).ToList());
+        }
+
         public List<string> GetVegetablesList()
         {
             List<string> vagetables = new List<string> {

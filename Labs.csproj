@@ -155,6 +155,21 @@
     <Compile Include="Models\Entities\Lessons.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\SupermarketModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupermarketModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Parents.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
@@ -167,6 +182,12 @@
     <Compile Include="Models\Entities\Schedule.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Students.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
@@ -177,7 +198,7 @@
       <DependentUpon>TPUTestModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\sysdiagrams.cs">
-      <DependentUpon>TestModel.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Teachers.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
@@ -221,11 +242,23 @@
     <Compile Include="Models\Entities\Users.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\vw_АктуальнаяЦена.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Weekdays.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Авторизация_кассиров.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Возврат.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Группы.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Дисконтная_карта.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Дисциплина_в_семестре.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
@@ -242,11 +275,38 @@
     <Compile Include="Models\Entities\Институты.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\История_авторизации.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Касса.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Кассир.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Категория_товара.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Корзина.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Направления_подготовки.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Покупка.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Поставка.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Поставщик.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Преподаватели.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Склад.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Студенты.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
@@ -257,6 +317,18 @@
     <Compile Include="Models\Entities\Студенты_кураторы.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Телефон.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Товар.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Товар_в_корзине.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Товары.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Форма_контроля.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
     </Compile>
@@ -265,6 +337,9 @@
     </Compile>
     <Compile Include="Models\Entities\Формы_оплаты.cs">
       <DependentUpon>TPUTestModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Цена.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\GroupVM.cs" />
     <Compile Include="Models\ViewModels\StudentVM.cs" />
@@ -290,6 +365,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Entities\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SupermarketModel.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SupermarketModel.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Entities\TestModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TestModel.Context.cs</LastGenOutput>
@@ -352,6 +437,13 @@
     <Content Include="Models\Entities\TPUTestModel.edmx.diagram">
       <DependentUpon>TPUTestModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\Entities\SupermarketModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SupermarketModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\SupermarketModel.edmx.diagram">
+      <DependentUpon>SupermarketModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -392,6 +484,7 @@
     <Content Include="Views\Lab2\GetStudent.cshtml" />
     <Content Include="Views\Lab4\EditStudent.cshtml" />
     <Content Include="Views\Lab4\DeleteGroup.cshtml" />
+    <Content Include="Views\Lab1\FourthViewMethod.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
