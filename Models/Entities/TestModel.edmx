@@ -1,0 +1,1290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище SchoolDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CallSchedule">
+          <Key>
+            <PropertyRef Name="id_lesson" />
+          </Key>
+          <Property Name="id_lesson" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="end_time" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="class_id" />
+          </Key>
+          <Property Name="class_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="teacher_id" Type="int" />
+          <Property Name="id_specialization" Type="int" />
+        </EntityType>
+        <EntityType Name="Classrooms">
+          <Key>
+            <PropertyRef Name="classroom_id" />
+          </Key>
+          <Property Name="classroom_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+          <Property Name="teacher_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Equipments">
+          <Key>
+            <PropertyRef Name="equipment_id" />
+          </Key>
+          <Property Name="equipment_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="classroom_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Homeworks">
+          <Key>
+            <PropertyRef Name="homework_id" />
+          </Key>
+          <Property Name="homework_id" Type="int" Nullable="false" />
+          <Property Name="task" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="deadline" Type="date" />
+        </EntityType>
+        <EntityType Name="Lessons">
+          <Key>
+            <PropertyRef Name="lesson_id" />
+          </Key>
+          <Property Name="lesson_id" Type="int" Nullable="false" />
+          <Property Name="timetable_id" Type="int" />
+          <Property Name="short_name" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="homework_id" Type="int" />
+          <Property Name="week_num" Type="int" />
+          <Property Name="date" Type="date" />
+        </EntityType>
+        <EntityType Name="Parents">
+          <Key>
+            <PropertyRef Name="parant_id" />
+          </Key>
+          <Property Name="parant_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="child_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Progress">
+          <Key>
+            <PropertyRef Name="lesson_id" />
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="lesson_id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="mark" Type="int" />
+          <Property Name="attendance" Type="nchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="RoleType">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="timetable_id" />
+          </Key>
+          <Property Name="timetable_id" Type="int" Nullable="false" />
+          <Property Name="class_id" Type="int" Nullable="false" />
+          <Property Name="weekday_id" Type="int" Nullable="false" />
+          <Property Name="lesson_number" Type="int" Nullable="false" />
+          <Property Name="subject_id" Type="int" Nullable="false" />
+          <Property Name="classroom_id" Type="int" Nullable="false" />
+          <Property Name="week_number" Type="int" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="class_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="subject_id" />
+          </Key>
+          <Property Name="subject_id" Type="int" Nullable="false" />
+          <Property Name="id_discipline" Type="int" Nullable="false" />
+          <Property Name="teacher_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="teacher_id" />
+          </Key>
+          <Property Name="teacher_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeOfDiscipline">
+          <Key>
+            <PropertyRef Name="id_discipline" />
+          </Key>
+          <Property Name="id_discipline" Type="int" Nullable="false" />
+          <Property Name="type_of_discipline" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="short_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeSpecialization">
+          <Key>
+            <PropertyRef Name="id_specialization" />
+          </Key>
+          <Property Name="id_specialization" Type="int" Nullable="false" />
+          <Property Name="type_of_specialization" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Weekdays">
+          <Key>
+            <PropertyRef Name="weekday_id" />
+          </Key>
+          <Property Name="weekday_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="Relationship11">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship12">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship14">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship16">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="class_id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship17">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship18">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Classrooms">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship20">
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classrooms">
+              <PropertyRef Name="classroom_id" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship21">
+          <End Role="CallSchedule" Type="Self.CallSchedule" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallSchedule">
+              <PropertyRef Name="id_lesson" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="lesson_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship23">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="class_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship24">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="subject_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship27">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship3">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship30">
+          <End Role="Homeworks" Type="Self.Homeworks" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Homeworks">
+              <PropertyRef Name="homework_id" />
+            </Principal>
+            <Dependent Role="Lessons">
+              <PropertyRef Name="homework_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship31">
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classrooms">
+              <PropertyRef Name="classroom_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship32">
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lessons">
+              <PropertyRef Name="lesson_id" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship33">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="child_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship40">
+          <End Role="RoleType" Type="Self.RoleType" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleType">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship41">
+          <End Role="TypeOfDiscipline" Type="Self.TypeOfDiscipline" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfDiscipline">
+              <PropertyRef Name="id_discipline" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="id_discipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship42">
+          <End Role="Weekdays" Type="Self.Weekdays" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weekdays">
+              <PropertyRef Name="weekday_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="weekday_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship43">
+          <End Role="TypeSpecialization" Type="Self.TypeSpecialization" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSpecialization">
+              <PropertyRef Name="id_specialization" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="id_specialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship44">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="timetable_id" />
+            </Principal>
+            <Dependent Role="Lessons">
+              <PropertyRef Name="timetable_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SchoolDBModelContainer">
+          <EntitySet Name="CallSchedule" EntityType="Self.CallSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classrooms" EntityType="Self.Classrooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipments" EntityType="Self.Equipments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Homeworks" EntityType="Self.Homeworks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lessons" EntityType="Self.Lessons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parents" EntityType="Self.Parents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Progress" EntityType="Self.Progress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleType" EntityType="Self.RoleType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfDiscipline" EntityType="Self.TypeOfDiscipline" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeSpecialization" EntityType="Self.TypeSpecialization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Weekdays" EntityType="Self.Weekdays" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Relationship11" Association="Self.Relationship11">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship12" Association="Self.Relationship12">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship14" Association="Self.Relationship14">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship16" Association="Self.Relationship16">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship17" Association="Self.Relationship17">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship18" Association="Self.Relationship18">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classrooms" EntitySet="Classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship20" Association="Self.Relationship20">
+            <End Role="Classrooms" EntitySet="Classrooms" />
+            <End Role="Equipments" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship21" Association="Self.Relationship21">
+            <End Role="CallSchedule" EntitySet="CallSchedule" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship23" Association="Self.Relationship23">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship24" Association="Self.Relationship24">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship27" Association="Self.Relationship27">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship3" Association="Self.Relationship3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship30" Association="Self.Relationship30">
+            <End Role="Homeworks" EntitySet="Homeworks" />
+            <End Role="Lessons" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship31" Association="Self.Relationship31">
+            <End Role="Classrooms" EntitySet="Classrooms" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship32" Association="Self.Relationship32">
+            <End Role="Lessons" EntitySet="Lessons" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship33" Association="Self.Relationship33">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship40" Association="Self.Relationship40">
+            <End Role="RoleType" EntitySet="RoleType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship41" Association="Self.Relationship41">
+            <End Role="TypeOfDiscipline" EntitySet="TypeOfDiscipline" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship42" Association="Self.Relationship42">
+            <End Role="Weekdays" EntitySet="Weekdays" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship43" Association="Self.Relationship43">
+            <End Role="TypeSpecialization" EntitySet="TypeSpecialization" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship44" Association="Self.Relationship44">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Lessons" EntitySet="Lessons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CallSchedule">
+          <Key>
+            <PropertyRef Name="id_lesson" />
+          </Key>
+          <Property Name="id_lesson" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="end_time" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship21" FromRole="CallSchedule" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="class_id" />
+          </Key>
+          <Property Name="class_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="teacher_id" Type="Int32" />
+          <Property Name="id_specialization" Type="Int32" />
+          <NavigationProperty Name="Teachers" Relationship="Self.Relationship14" FromRole="Classes" ToRole="Teachers" />
+          <NavigationProperty Name="Students" Relationship="Self.Relationship16" FromRole="Classes" ToRole="Students" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship23" FromRole="Classes" ToRole="Schedule" />
+          <NavigationProperty Name="TypeSpecialization" Relationship="Self.Relationship43" FromRole="Classes" ToRole="TypeSpecialization" />
+        </EntityType>
+        <EntityType Name="Classrooms">
+          <Key>
+            <PropertyRef Name="classroom_id" />
+          </Key>
+          <Property Name="classroom_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <Property Name="teacher_id" Type="Int32" />
+          <NavigationProperty Name="Teachers" Relationship="Self.Relationship18" FromRole="Classrooms" ToRole="Teachers" />
+          <NavigationProperty Name="Equipments" Relationship="Self.Relationship20" FromRole="Classrooms" ToRole="Equipments" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship31" FromRole="Classrooms" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Equipments">
+          <Key>
+            <PropertyRef Name="equipment_id" />
+          </Key>
+          <Property Name="equipment_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="classroom_id" Type="Int32" />
+          <NavigationProperty Name="Classrooms" Relationship="Self.Relationship20" FromRole="Equipments" ToRole="Classrooms" />
+        </EntityType>
+        <EntityType Name="Homeworks">
+          <Key>
+            <PropertyRef Name="homework_id" />
+          </Key>
+          <Property Name="homework_id" Type="Int32" Nullable="false" />
+          <Property Name="task" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="deadline" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Lessons" Relationship="Self.Relationship30" FromRole="Homeworks" ToRole="Lessons" />
+        </EntityType>
+        <EntityType Name="Lessons">
+          <Key>
+            <PropertyRef Name="lesson_id" />
+          </Key>
+          <Property Name="lesson_id" Type="Int32" Nullable="false" />
+          <Property Name="timetable_id" Type="Int32" />
+          <Property Name="short_name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="homework_id" Type="Int32" />
+          <Property Name="week_num" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Homeworks" Relationship="Self.Relationship30" FromRole="Lessons" ToRole="Homeworks" />
+          <NavigationProperty Name="Progress" Relationship="Self.Relationship32" FromRole="Lessons" ToRole="Progress" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship44" FromRole="Lessons" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Parents">
+          <Key>
+            <PropertyRef Name="parant_id" />
+          </Key>
+          <Property Name="parant_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="child_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.Relationship11" FromRole="Parents" ToRole="Users" />
+          <NavigationProperty Name="Students" Relationship="Self.Relationship33" FromRole="Parents" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="Progress">
+          <Key>
+            <PropertyRef Name="lesson_id" />
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="lesson_id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="mark" Type="Int32" />
+          <Property Name="attendance" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Lessons" Relationship="Self.Relationship32" FromRole="Progress" ToRole="Lessons" />
+          <NavigationProperty Name="Students" Relationship="Self.Relationship27" FromRole="Progress" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="RoleType">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.Relationship40" FromRole="RoleType" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="timetable_id" />
+          </Key>
+          <Property Name="timetable_id" Type="Int32" Nullable="false" />
+          <Property Name="class_id" Type="Int32" Nullable="false" />
+          <Property Name="weekday_id" Type="Int32" Nullable="false" />
+          <Property Name="lesson_number" Type="Int32" Nullable="false" />
+          <Property Name="subject_id" Type="Int32" Nullable="false" />
+          <Property Name="classroom_id" Type="Int32" Nullable="false" />
+          <Property Name="week_number" Type="Int32" />
+          <NavigationProperty Name="CallSchedule" Relationship="Self.Relationship21" FromRole="Schedule" ToRole="CallSchedule" />
+          <NavigationProperty Name="Classes" Relationship="Self.Relationship23" FromRole="Schedule" ToRole="Classes" />
+          <NavigationProperty Name="Classrooms" Relationship="Self.Relationship31" FromRole="Schedule" ToRole="Classrooms" />
+          <NavigationProperty Name="Lessons" Relationship="Self.Relationship44" FromRole="Schedule" ToRole="Lessons" />
+          <NavigationProperty Name="Subjects" Relationship="Self.Relationship24" FromRole="Schedule" ToRole="Subjects" />
+          <NavigationProperty Name="Weekdays" Relationship="Self.Relationship42" FromRole="Schedule" ToRole="Weekdays" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="class_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.Relationship16" FromRole="Students" ToRole="Classes" />
+          <NavigationProperty Name="Parents" Relationship="Self.Relationship33" FromRole="Students" ToRole="Parents" />
+          <NavigationProperty Name="Progress" Relationship="Self.Relationship27" FromRole="Students" ToRole="Progress" />
+          <NavigationProperty Name="Users" Relationship="Self.Relationship12" FromRole="Students" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="subject_id" />
+          </Key>
+          <Property Name="subject_id" Type="Int32" Nullable="false" />
+          <Property Name="id_discipline" Type="Int32" Nullable="false" />
+          <Property Name="teacher_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship24" FromRole="Subjects" ToRole="Schedule" />
+          <NavigationProperty Name="Teachers" Relationship="Self.Relationship17" FromRole="Subjects" ToRole="Teachers" />
+          <NavigationProperty Name="TypeOfDiscipline" Relationship="Self.Relationship41" FromRole="Subjects" ToRole="TypeOfDiscipline" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="teacher_id" />
+          </Key>
+          <Property Name="teacher_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.Relationship14" FromRole="Teachers" ToRole="Classes" />
+          <NavigationProperty Name="Classrooms" Relationship="Self.Relationship18" FromRole="Teachers" ToRole="Classrooms" />
+          <NavigationProperty Name="Subjects" Relationship="Self.Relationship17" FromRole="Teachers" ToRole="Subjects" />
+          <NavigationProperty Name="Users" Relationship="Self.Relationship3" FromRole="Teachers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="TypeOfDiscipline">
+          <Key>
+            <PropertyRef Name="id_discipline" />
+          </Key>
+          <Property Name="id_discipline" Type="Int32" Nullable="false" />
+          <Property Name="type_of_discipline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="short_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="Self.Relationship41" FromRole="TypeOfDiscipline" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="TypeSpecialization">
+          <Key>
+            <PropertyRef Name="id_specialization" />
+          </Key>
+          <Property Name="id_specialization" Type="Int32" Nullable="false" />
+          <Property Name="type_of_specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.Relationship43" FromRole="TypeSpecialization" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parents" Relationship="Self.Relationship11" FromRole="Users" ToRole="Parents" />
+          <NavigationProperty Name="RoleType" Relationship="Self.Relationship40" FromRole="Users" ToRole="RoleType" />
+          <NavigationProperty Name="Students" Relationship="Self.Relationship12" FromRole="Users" ToRole="Students" />
+          <NavigationProperty Name="Teachers" Relationship="Self.Relationship3" FromRole="Users" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Weekdays">
+          <Key>
+            <PropertyRef Name="weekday_id" />
+          </Key>
+          <Property Name="weekday_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.Relationship42" FromRole="Weekdays" ToRole="Schedule" />
+        </EntityType>
+        <Association Name="Relationship21">
+          <End Role="CallSchedule" Type="Self.CallSchedule" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallSchedule">
+              <PropertyRef Name="id_lesson" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="lesson_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship14">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship16">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="class_id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship23">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="class_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship43">
+          <End Role="TypeSpecialization" Type="Self.TypeSpecialization" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSpecialization">
+              <PropertyRef Name="id_specialization" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="id_specialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship18">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Classrooms">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship20">
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="0..1" />
+          <End Role="Equipments" Type="Self.Equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classrooms">
+              <PropertyRef Name="classroom_id" />
+            </Principal>
+            <Dependent Role="Equipments">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship31">
+          <End Role="Classrooms" Type="Self.Classrooms" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classrooms">
+              <PropertyRef Name="classroom_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship30">
+          <End Role="Homeworks" Type="Self.Homeworks" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Homeworks">
+              <PropertyRef Name="homework_id" />
+            </Principal>
+            <Dependent Role="Lessons">
+              <PropertyRef Name="homework_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship32">
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lessons">
+              <PropertyRef Name="lesson_id" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship44">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="timetable_id" />
+            </Principal>
+            <Dependent Role="Lessons">
+              <PropertyRef Name="timetable_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship11">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship33">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="child_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship27">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship40">
+          <End Role="RoleType" Type="Self.RoleType" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleType">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship24">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="subject_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship42">
+          <End Role="Weekdays" Type="Self.Weekdays" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weekdays">
+              <PropertyRef Name="weekday_id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="weekday_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship12">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship17">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacher_id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship41">
+          <End Role="TypeOfDiscipline" Type="Self.TypeOfDiscipline" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfDiscipline">
+              <PropertyRef Name="id_discipline" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="id_discipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship3">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CallSchedule" EntityType="Self.CallSchedule" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" />
+          <EntitySet Name="Classrooms" EntityType="Self.Classrooms" />
+          <EntitySet Name="Equipments" EntityType="Self.Equipments" />
+          <EntitySet Name="Homeworks" EntityType="Self.Homeworks" />
+          <EntitySet Name="Lessons" EntityType="Self.Lessons" />
+          <EntitySet Name="Parents" EntityType="Self.Parents" />
+          <EntitySet Name="Progress" EntityType="Self.Progress" />
+          <EntitySet Name="RoleType" EntityType="Self.RoleType" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" />
+          <EntitySet Name="Students" EntityType="Self.Students" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <EntitySet Name="TypeOfDiscipline" EntityType="Self.TypeOfDiscipline" />
+          <EntitySet Name="TypeSpecialization" EntityType="Self.TypeSpecialization" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Weekdays" EntityType="Self.Weekdays" />
+          <AssociationSet Name="Relationship21" Association="Self.Relationship21">
+            <End Role="CallSchedule" EntitySet="CallSchedule" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship14" Association="Self.Relationship14">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship16" Association="Self.Relationship16">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship23" Association="Self.Relationship23">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship43" Association="Self.Relationship43">
+            <End Role="TypeSpecialization" EntitySet="TypeSpecialization" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship18" Association="Self.Relationship18">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Classrooms" EntitySet="Classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship20" Association="Self.Relationship20">
+            <End Role="Classrooms" EntitySet="Classrooms" />
+            <End Role="Equipments" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship31" Association="Self.Relationship31">
+            <End Role="Classrooms" EntitySet="Classrooms" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship30" Association="Self.Relationship30">
+            <End Role="Homeworks" EntitySet="Homeworks" />
+            <End Role="Lessons" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship32" Association="Self.Relationship32">
+            <End Role="Lessons" EntitySet="Lessons" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship44" Association="Self.Relationship44">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Lessons" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship11" Association="Self.Relationship11">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship33" Association="Self.Relationship33">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship27" Association="Self.Relationship27">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship40" Association="Self.Relationship40">
+            <End Role="RoleType" EntitySet="RoleType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship24" Association="Self.Relationship24">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship42" Association="Self.Relationship42">
+            <End Role="Weekdays" EntitySet="Weekdays" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship12" Association="Self.Relationship12">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship17" Association="Self.Relationship17">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship41" Association="Self.Relationship41">
+            <End Role="TypeOfDiscipline" EntitySet="TypeOfDiscipline" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship3" Association="Self.Relationship3">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SchoolDBModelContainer" CdmEntityContainer="SchoolDBEntities">
+          <EntitySetMapping Name="CallSchedule">
+            <EntityTypeMapping TypeName="SchoolDBModel.CallSchedule">
+              <MappingFragment StoreEntitySet="CallSchedule">
+                <ScalarProperty Name="id_lesson" ColumnName="id_lesson" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SchoolDBModel.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+                <ScalarProperty Name="id_specialization" ColumnName="id_specialization" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classrooms">
+            <EntityTypeMapping TypeName="SchoolDBModel.Classrooms">
+              <MappingFragment StoreEntitySet="Classrooms">
+                <ScalarProperty Name="classroom_id" ColumnName="classroom_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipments">
+            <EntityTypeMapping TypeName="SchoolDBModel.Equipments">
+              <MappingFragment StoreEntitySet="Equipments">
+                <ScalarProperty Name="equipment_id" ColumnName="equipment_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="classroom_id" ColumnName="classroom_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Homeworks">
+            <EntityTypeMapping TypeName="SchoolDBModel.Homeworks">
+              <MappingFragment StoreEntitySet="Homeworks">
+                <ScalarProperty Name="homework_id" ColumnName="homework_id" />
+                <ScalarProperty Name="task" ColumnName="task" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="deadline" ColumnName="deadline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lessons">
+            <EntityTypeMapping TypeName="SchoolDBModel.Lessons">
+              <MappingFragment StoreEntitySet="Lessons">
+                <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+                <ScalarProperty Name="timetable_id" ColumnName="timetable_id" />
+                <ScalarProperty Name="short_name" ColumnName="short_name" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="homework_id" ColumnName="homework_id" />
+                <ScalarProperty Name="week_num" ColumnName="week_num" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parents">
+            <EntityTypeMapping TypeName="SchoolDBModel.Parents">
+              <MappingFragment StoreEntitySet="Parents">
+                <ScalarProperty Name="parant_id" ColumnName="parant_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="child_id" ColumnName="child_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Progress">
+            <EntityTypeMapping TypeName="SchoolDBModel.Progress">
+              <MappingFragment StoreEntitySet="Progress">
+                <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="mark" ColumnName="mark" />
+                <ScalarProperty Name="attendance" ColumnName="attendance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleType">
+            <EntityTypeMapping TypeName="SchoolDBModel.RoleType">
+              <MappingFragment StoreEntitySet="RoleType">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedule">
+            <EntityTypeMapping TypeName="SchoolDBModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="timetable_id" ColumnName="timetable_id" />
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+                <ScalarProperty Name="weekday_id" ColumnName="weekday_id" />
+                <ScalarProperty Name="lesson_number" ColumnName="lesson_number" />
+                <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+                <ScalarProperty Name="classroom_id" ColumnName="classroom_id" />
+                <ScalarProperty Name="week_number" ColumnName="week_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SchoolDBModel.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="SchoolDBModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+                <ScalarProperty Name="id_discipline" ColumnName="id_discipline" />
+                <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SchoolDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SchoolDBModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfDiscipline">
+            <EntityTypeMapping TypeName="SchoolDBModel.TypeOfDiscipline">
+              <MappingFragment StoreEntitySet="TypeOfDiscipline">
+                <ScalarProperty Name="id_discipline" ColumnName="id_discipline" />
+                <ScalarProperty Name="type_of_discipline" ColumnName="type_of_discipline" />
+                <ScalarProperty Name="short_name" ColumnName="short_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeSpecialization">
+            <EntityTypeMapping TypeName="SchoolDBModel.TypeSpecialization">
+              <MappingFragment StoreEntitySet="TypeSpecialization">
+                <ScalarProperty Name="id_specialization" ColumnName="id_specialization" />
+                <ScalarProperty Name="type_of_specialization" ColumnName="type_of_specialization" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SchoolDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weekdays">
+            <EntityTypeMapping TypeName="SchoolDBModel.Weekdays">
+              <MappingFragment StoreEntitySet="Weekdays">
+                <ScalarProperty Name="weekday_id" ColumnName="weekday_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

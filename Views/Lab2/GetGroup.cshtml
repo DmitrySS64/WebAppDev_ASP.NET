@@ -1,0 +1,32 @@
+﻿@model LW_1.Models.Entities.Группы
+@{
+    ViewBag.Title = "GetGroup";
+}
+
+<h2>Группа</h2>
+@if (Model != null)
+{
+    foreach (var propertyInfo in typeof(LW_1.Models.Entities.Группы).GetProperties())
+    {
+        if (!propertyInfo.GetGetMethod().IsVirtual)
+        {
+            <div class="row">
+                <div class="col-md-3">@propertyInfo.Name.Replace("_", " ")</div>
+                <div class="col-md-3">@propertyInfo.GetValue(Model)</div>
+            </div>
+        }
+    }
+    <p>
+        @Html.ActionLink("Редактировать", "EditGroup", "Lab4", new { groupID = Model.ID_группы }, new { @class = "btn btn-default" })
+    </p>
+    <p>
+        @Html.ActionLink("Back to List", "ListGroup")
+    </p>
+    <p>
+        @Html.ActionLink("Delete", "DeleteGroup", "Lab4", new { groupID = Model.ID_группы }, null)
+    </p>
+}
+else
+{
+    <p> Group not found.</p>
+}

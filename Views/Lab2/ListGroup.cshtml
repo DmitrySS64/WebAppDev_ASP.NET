@@ -1,0 +1,45 @@
+﻿@model List<LW_1.Models.Entities.Группы>
+@{
+    ViewBag.Title = "ListGroup";
+}
+
+<h2>Список групп</h2>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            @foreach (var propertyInfo in typeof(LW_1.Models.Entities.Группы).GetProperties())
+            {
+                if (!propertyInfo.GetGetMethod().IsVirtual)
+                {
+                    <th class="text-center">@propertyInfo.Name</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr class="text-center">
+                @foreach (var propertyInfo in typeof(LW_1.Models.Entities.Группы).GetProperties())
+                {
+                    if (!propertyInfo.GetGetMethod().IsVirtual)
+                    {
+                        if (propertyInfo.Name.Contains("Код") || propertyInfo.Name.Contains("ID"))
+                        {
+                            <td>@propertyInfo.GetValue()</td>
+                        }
+                        <td>@propertyInfo.GetValue(group)</td>
+                    }
+                }
+                <td>@Html.ActionLink("подробнее", "GetGroup", "Lab2", new { groupID = group.ID_группы }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-default" onclick="location.href'@Url.Action("CreateGroup", "Lab3")'">
+    <span class="glyphicon gliphicon-plus"></span> Добавить группу
+</button>
+@Html.ActionLink("Добавить", "CreateGroup", "Lab3", null, new { @class = "btn btn-default" })

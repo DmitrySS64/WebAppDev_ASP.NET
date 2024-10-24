@@ -1,0 +1,27 @@
+﻿@model List<LW_1.Models.Entities.CallSchedule>
+@{
+    ViewBag.Title = "ListCallSchedule";
+}
+
+<h2>ListCallSchedule</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Start time</th>
+            <th class="text-center">End time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var call in Model)
+            {
+                <tr class="text-center">
+                    <td><a>@call.id_lesson</a></td>
+                    <td>@call.start_time</td>
+                    <td>@call.end_time</td>
+                    <td>@Html.ActionLink("подробнее", "GetCallSchedule", "Lab2", new { callId = call.id_lesson }, null)</td>
+                </tr>
+            }
+    </tbody>
+</table>

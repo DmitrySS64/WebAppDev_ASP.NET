@@ -1,0 +1,28 @@
+﻿@model List<string>
+
+<h2>Группировка овощей (по таблицам)</h2>
+@{
+    var currentModel = Model.GroupBy(x => x.Substring(0, 1)).ToList();
+    foreach (var group in currentModel)
+    {
+        <hr />
+        <table class="table" style="width:20%; border: 1px solid;">
+            <thead>
+                <tr>
+                    <th class="text-center">@group.Key</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var word in group)
+                {
+                    <tr>
+                        <td class="text-center">@word</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+
+

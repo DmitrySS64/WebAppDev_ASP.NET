@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "ListStudents";
+}
+
+<h2>ListStudents</h2>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            @foreach (var propertyInfo in typeof(LW_1.Models.Entities.Студенты).GetProperties())
+            {
+                if (!propertyInfo.GetGetMethod().IsVirtual)
+                {
+                    <th class="text-center">@propertyInfo.Name</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr class="text-center">
+                @foreach (var propertyInfo in typeof(LW_1.Models.Entities.Студенты).GetProperties())
+                {
+                    if (!propertyInfo.GetGetMethod().IsVirtual)
+                    {
+                        <td>@propertyInfo.GetValue(student)</td>
+                    }
+                }
+                <td>@Html.ActionLink("подробнее", "GetStudent", "Lab2", new { studentID = student.ID_студента }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-default" onclick="location.href'@Url.Action("CreateStudent", "Lab3")'">
+    <span class="glyphicon gliphicon-plus"></span> Добавить
+</button>
+@Html.ActionLink("Добавить", "CreateStudent", "Lab3", null, new { @class = "btn btn-default" })

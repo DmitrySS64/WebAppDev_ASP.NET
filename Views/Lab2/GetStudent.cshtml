@@ -1,0 +1,81 @@
+﻿@model LW_1.Models.Entities.Студенты
+
+@{
+    ViewBag.Title = "GetStudent";
+}
+
+<h2>GetStudent</h2>
+
+@if (Model != null)
+{
+    <div>
+        <h4>Студенты</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Фамилия)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Фамилия)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Имя)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Имя)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Отчество)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Отчество)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Пол)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Пол)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Адрес_проживания)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Адрес_проживания)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Дата_рождения)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Дата_рождения)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Уровень_владения_ИЯ)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Уровень_владения_ИЯ)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "EditStudent", "Lab4", new { studentID = Model.ID_студента }, null)
+        @Html.ActionLink("Back to List", "ListStudents")
+    </p>
+}
+else
+{
+    <p>Объект не найден</p>
+}

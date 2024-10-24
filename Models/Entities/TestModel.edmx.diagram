@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1cdfc1bed5a542c29be84b4254fc9195" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolDBModel.CallSchedule" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Classes" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Classrooms" Width="1.5" PointX="7.5" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Equipments" Width="1.5" PointX="9.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Homeworks" Width="1.5" PointX="12.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Lessons" Width="1.5" PointX="15" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Parents" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Progress" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.RoleType" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Schedule" Width="1.5" PointX="12.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Students" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Subjects" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Teachers" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.TypeOfDiscipline" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.TypeSpecialization" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Users" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.Weekdays" Width="1.5" PointX="10.5" PointY="21" IsExpanded="true" />
+        <AssociationConnector Association="SchoolDBModel.Relationship21" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship14" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship16" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship23" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship43" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship18" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship20" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship31" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship30" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship32" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship44" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship11" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship33" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship27" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship40" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship24" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship42" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship12" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship17" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship41" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolDBModel.Relationship3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

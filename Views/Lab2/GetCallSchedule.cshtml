@@ -1,0 +1,33 @@
+﻿@model LW_1.Models.Entities.CallSchedule
+
+@{
+    ViewBag.Title = "GetCallSchedule";
+}
+
+<h2>Звонок</h2>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-1">@Html.LabelFor(m => m.start_time)</div>
+        <div class="col-md-3">@Html.DisplayFor(m => m.start_time)</div>
+
+        <div class="col-md-1">@Html.LabelFor(m => m.end_time)</div>
+        <div class="col-md-3">@Html.DisplayFor(m => m.end_time)</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-1">@Html.LabelFor(m => m.end_time)</div>
+        <div class="col-md-3">@Html.DisplayFor(m => m.end_time)</div>
+    </div>
+
+    <p>
+        @Html.ActionLink("Back to List", "ListCallSchedule")
+    </p>
+}
+else
+{
+    <p>ID не найден.</p>
+}
+
