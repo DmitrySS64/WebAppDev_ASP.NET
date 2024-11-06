@@ -13,14 +13,16 @@ namespace LW_1.Controllers
             var controllers = new List<Type>
             {
                 typeof(Lab1Controller),
-                typeof(Lab2Controller),
+                //typeof(Lab2Controller),
+                typeof(Lab2V2Controller),
                 typeof(Lab3Controller),
-                typeof(Lab4Controller)
+                typeof(Lab4Controller),
+                typeof(Lab5Controller)
             };
             return View(controllers);
         }
 
-        public ActionResult About()
+        public ActionResult IDZ()
         {
             ViewBag.Message = "Your application description page.";
 

@@ -25,6 +25,10 @@ namespace LW_1
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquerymaskedinput").Include(
+                "~/Scripts/jquery.maskedinput-{version}.js"));
+
         }
     }
 }

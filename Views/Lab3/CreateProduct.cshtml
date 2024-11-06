@@ -1,0 +1,84 @@
+﻿@model LW_1.Models.ViewModels.CreateProductVM
+
+@{
+    ViewBag.Title = "CreateProduct";
+}
+
+<h2>CreateProduct</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>CreateProductVM</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Наименование, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Наименование, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                @Html.ValidationMessageFor(model => model.Наименование, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Количество, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Количество, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                @Html.ValidationMessageFor(model => model.Количество, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id_категории, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Id_категории, ViewBag.Categories as SelectList, "Выборите категорию товара", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Id_категории, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Цена, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@if (Model?.Цена != null)
+                {
+                    <input type="number" min="0" step="0.01" id="Price" name="Price" class="form-control" data-value="@Model.Цена" />
+                } else
+                {
+                    <input type="number" min="0" step="0.01" id="Price" name="Price" class="form-control" />
+                }*@
+                
+                
+                @Html.EditorFor(model => model.Цена, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        id = "Price",
+                        type = "number",
+                        step = "0.01"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.Цена, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListOfProducts", "Lab2V2")
+</div>
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        let priceField = $("#Price");
+        priceField.val(priceField.val().replace(",", "."));
+    });
+</script>*@

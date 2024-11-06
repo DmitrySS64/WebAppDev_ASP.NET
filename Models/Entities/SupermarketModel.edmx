@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище IDZ_Sergeev_SupermarketModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище IDZ_Sergeev_SupermarketModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -14,6 +21,16 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Авторизация кассиров">
           <Key>
@@ -50,17 +67,6 @@
           </Key>
           <Property Name="Номер кассы" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Касса самообслуживания" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Кассир">
-          <Key>
-            <PropertyRef Name="id сотрудника" />
-          </Key>
-          <Property Name="id сотрудника" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Фамилия" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Имя" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Отчество" Type="varchar" MaxLength="30" />
-          <Property Name="Пароль" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="id телефона" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Категория товара">
           <Key>
@@ -113,6 +119,18 @@
           <Property Name="Количество" Type="int" Nullable="false" />
           <Property Name="Код товара" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Сотрудник">
+          <Key>
+            <PropertyRef Name="id сотрудника" />
+          </Key>
+          <Property Name="id сотрудника" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Фамилия" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Имя" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Отчество" Type="varchar" MaxLength="100" />
+          <Property Name="Дата рождения" Type="date" Nullable="false" />
+          <Property Name="Пол" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="id телефона" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Телефон">
           <Key>
             <PropertyRef Name="id телефона" />
@@ -137,6 +155,7 @@
           <Property Name="Количество" Type="int" Nullable="false" />
           <Property Name="Код товара" Type="bigint" Nullable="false" />
           <Property Name="id корзины" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Цена" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Цена">
           <Key>
@@ -157,6 +176,46 @@
           </Key>
           <Property Name="Код товара" Type="bigint" Nullable="false" />
           <Property Name="Цена" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "IDZ_Sergeev_Supermarket.dbo.vw_ОтчетАктуальныеЦены" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="vw_ОтчетАктуальныеЦены">
+          <Key>
+            <PropertyRef Name="Код товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Название категории" />
+            <PropertyRef Name="Цена" />
+          </Key>
+          <Property Name="Код товара" Type="bigint" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Название категории" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Цена" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "IDZ_Sergeev_Supermarket.dbo.vw_ОтчетПоДефицитуТовара" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="vw_ОтчетПоДефицитуТовара">
+          <Key>
+            <PropertyRef Name="Код товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="Код товара" Type="bigint" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Количество" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "IDZ_Sergeev_Supermarket.dbo.vw_ОтчетПоОстаткамТоваровНаСкладе" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="vw_ОтчетПоОстаткамТоваровНаСкладе">
+          <Key>
+            <PropertyRef Name="Код товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Название категории" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="Код товара" Type="bigint" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Название категории" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Количество" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "IDZ_Sergeev_Supermarket.dbo.История авторизации" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -180,17 +239,50 @@
         <EntityType Name="Товары">
           <Key>
             <PropertyRef Name="Код товара" />
-            <PropertyRef Name="Наименование" />
-            <PropertyRef Name="Количество" />
-            <PropertyRef Name="Название категории" />
-            <PropertyRef Name="Цена" />
+            
           </Key>
           <Property Name="Код товара" Type="bigint" Nullable="false" />
           <Property Name="Наименование" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Количество" Type="int" Nullable="false" />
-          <Property Name="Название категории" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Цена" Type="money" Nullable="false" />
+          <Property Name="Количество" Type="int" />
+          <Property Name="Название категории" Type="varchar" MaxLength="100" />
+          <Property Name="Цена" Type="money" />
         </EntityType>
+        <Association Name="FK_User_Role1">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Сотрудник1">
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудник">
+              <PropertyRef Name="id сотрудника" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Авторизация кассиров_Сотрудник">
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="1" />
+          <End Role="Авторизация кассиров" Type="Self.Авторизация кассиров" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудник">
+              <PropertyRef Name="id сотрудника" />
+            </Principal>
+            <Dependent Role="Авторизация кассиров">
+              <PropertyRef Name="id сотрудника" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Где проводилась покупка">
           <End Role="Касса" Type="Self.Касса" Multiplicity="1" />
           <End Role="Покупка" Type="Self.Покупка" Multiplicity="*" />
@@ -199,30 +291,6 @@
               <PropertyRef Name="Номер кассы" />
             </Principal>
             <Dependent Role="Покупка">
-              <PropertyRef Name="Номер кассы" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Кто авторизовался">
-          <End Role="Кассир" Type="Self.Кассир" Multiplicity="1" />
-          <End Role="Авторизация кассиров" Type="Self.Авторизация кассиров" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Кассир">
-              <PropertyRef Name="id сотрудника" />
-            </Principal>
-            <Dependent Role="Авторизация кассиров">
-              <PropertyRef Name="id сотрудника" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="На какой кассе">
-          <End Role="Касса" Type="Self.Касса" Multiplicity="1" />
-          <End Role="Авторизация кассиров" Type="Self.Авторизация кассиров" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Касса">
-              <PropertyRef Name="Номер кассы" />
-            </Principal>
-            <Dependent Role="Авторизация кассиров">
               <PropertyRef Name="Номер кассы" />
             </Dependent>
           </ReferentialConstraint>
@@ -325,12 +393,12 @@
         </Association>
         <Association Name="Телефон работника">
           <End Role="Телефон" Type="Self.Телефон" Multiplicity="1" />
-          <End Role="Кассир" Type="Self.Кассир" Multiplicity="*" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Телефон">
               <PropertyRef Name="id телефона" />
             </Principal>
-            <Dependent Role="Кассир">
+            <Dependent Role="Сотрудник">
               <PropertyRef Name="id телефона" />
             </Dependent>
           </ReferentialConstraint>
@@ -383,6 +451,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Login" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="UserRole" Type="int" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -416,7 +490,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ДобавитьИлиОбновитьТовар" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Название" Type="varchar" Mode="In" />
-          <Parameter Name="Цена" Type="int" Mode="In" />
+          <Parameter Name="Цена" Type="decimal" Mode="In" />
           <Parameter Name="idКатегории" Type="int" Mode="In" />
           <Parameter Name="Количество" Type="int" Mode="In" />
         </Function>
@@ -431,18 +505,20 @@
           <Parameter Name="НомерКартыОплаты" Type="bigint" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище IDZ_Sergeev_SupermarketModelContainer">
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Авторизация кассиров" EntityType="Self.Авторизация кассиров" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Возврат" EntityType="Self.Возврат" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Дисконтная карта" EntityType="Self.Дисконтная карта" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Касса" EntityType="Self.Касса" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Кассир" EntityType="Self.Кассир" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Категория товара" EntityType="Self.Категория товара" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Корзина" EntityType="Self.Корзина" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Покупка" EntityType="Self.Покупка" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Поставка" EntityType="Self.Поставка" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Поставщик" EntityType="Self.Поставщик" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Склад" EntityType="Self.Склад" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Сотрудник" EntityType="Self.Сотрудник" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Телефон" EntityType="Self.Телефон" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Товар" EntityType="Self.Товар" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Товар в корзине" EntityType="Self.Товар в корзине" Schema="dbo" store:Type="Tables" />
@@ -452,6 +528,29 @@
     [vw_АктуальнаяЦена].[Код товара] AS [Код товара], 
     [vw_АктуальнаяЦена].[Цена] AS [Цена]
     FROM [dbo].[vw_АктуальнаяЦена] AS [vw_АктуальнаяЦена]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_ОтчетАктуальныеЦены" EntityType="Self.vw_ОтчетАктуальныеЦены" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ОтчетАктуальныеЦены].[Код товара] AS [Код товара], 
+    [vw_ОтчетАктуальныеЦены].[Наименование] AS [Наименование], 
+    [vw_ОтчетАктуальныеЦены].[Название категории] AS [Название категории], 
+    [vw_ОтчетАктуальныеЦены].[Цена] AS [Цена]
+    FROM [dbo].[vw_ОтчетАктуальныеЦены] AS [vw_ОтчетАктуальныеЦены]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_ОтчетПоДефицитуТовара" EntityType="Self.vw_ОтчетПоДефицитуТовара" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ОтчетПоДефицитуТовара].[Код товара] AS [Код товара], 
+    [vw_ОтчетПоДефицитуТовара].[Наименование] AS [Наименование], 
+    [vw_ОтчетПоДефицитуТовара].[Количество] AS [Количество]
+    FROM [dbo].[vw_ОтчетПоДефицитуТовара] AS [vw_ОтчетПоДефицитуТовара]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_ОтчетПоОстаткамТоваровНаСкладе" EntityType="Self.vw_ОтчетПоОстаткамТоваровНаСкладе" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ОтчетПоОстаткамТоваровНаСкладе].[Код товара] AS [Код товара], 
+    [vw_ОтчетПоОстаткамТоваровНаСкладе].[Наименование] AS [Наименование], 
+    [vw_ОтчетПоОстаткамТоваровНаСкладе].[Название категории] AS [Название категории], 
+    [vw_ОтчетПоОстаткамТоваровНаСкладе].[Количество] AS [Количество]
+    FROM [dbo].[vw_ОтчетПоОстаткамТоваровНаСкладе] AS [vw_ОтчетПоОстаткамТоваровНаСкладе]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="История авторизации" EntityType="Self.История авторизации" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -472,17 +571,21 @@
     [Товары].[Цена] AS [Цена]
     FROM [dbo].[Товары] AS [Товары]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_User_Role1" Association="Self.FK_User_Role1">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Сотрудник1" Association="Self.FK_User_Сотрудник1">
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Авторизация кассиров_Сотрудник" Association="Self.FK_Авторизация кассиров_Сотрудник">
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+            <End Role="Авторизация кассиров" EntitySet="Авторизация кассиров" />
+          </AssociationSet>
           <AssociationSet Name="Где проводилась покупка" Association="Self.Где проводилась покупка">
             <End Role="Касса" EntitySet="Касса" />
             <End Role="Покупка" EntitySet="Покупка" />
-          </AssociationSet>
-          <AssociationSet Name="Кто авторизовался" Association="Self.Кто авторизовался">
-            <End Role="Кассир" EntitySet="Кассир" />
-            <End Role="Авторизация кассиров" EntitySet="Авторизация кассиров" />
-          </AssociationSet>
-          <AssociationSet Name="На какой кассе" Association="Self.На какой кассе">
-            <End Role="Касса" EntitySet="Касса" />
-            <End Role="Авторизация кассиров" EntitySet="Авторизация кассиров" />
           </AssociationSet>
           <AssociationSet Name="На какой кассе возврат" Association="Self.На какой кассе возврат">
             <End Role="Касса" EntitySet="Касса" />
@@ -518,7 +621,7 @@
           </AssociationSet>
           <AssociationSet Name="Телефон работника" Association="Self.Телефон работника">
             <End Role="Телефон" EntitySet="Телефон" />
-            <End Role="Кассир" EntitySet="Кассир" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
           <AssociationSet Name="Тип товара" Association="Self.Тип товара">
             <End Role="Категория товара" EntitySet="Категория товара" />
@@ -537,8 +640,7 @@
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IDZ_Sergeev_SupermarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -561,8 +663,8 @@
           <Property Name="Время_выхода_из_системы" Type="DateTime" Precision="3" />
           <Property Name="Номер_кассы" Type="Int32" Nullable="false" />
           <Property Name="id_сотрудника" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Кассир" Relationship="Self.Кто_авторизовался" FromRole="Авторизация_кассиров" ToRole="Кассир" />
           <NavigationProperty Name="Касса" Relationship="Self.На_какой_кассе" FromRole="Авторизация_кассиров" ToRole="Касса" />
+          <NavigationProperty Name="Сотрудник" Relationship="IDZ_Sergeev_SupermarketModel.FK_Авторизация_кассиров_Сотрудник" FromRole="Авторизация_кассиров" ToRole="Сотрудник" />
         </EntityType>
         <EntityType Name="Возврат">
           <Key>
@@ -596,19 +698,6 @@
           <NavigationProperty Name="Авторизация_кассиров" Relationship="Self.На_какой_кассе" FromRole="Касса" ToRole="Авторизация_кассиров" />
           <NavigationProperty Name="Возврат" Relationship="Self.На_какой_кассе_возврат" FromRole="Касса" ToRole="Возврат" />
           <NavigationProperty Name="Покупка" Relationship="Self.Где_проводилась_покупка" FromRole="Касса" ToRole="Покупка" />
-        </EntityType>
-        <EntityType Name="Кассир">
-          <Key>
-            <PropertyRef Name="id_сотрудника" />
-          </Key>
-          <Property Name="id_сотрудника" Type="Guid" Nullable="false" />
-          <Property Name="Фамилия" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Имя" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Отчество" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Пароль" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="id_телефона" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Авторизация_кассиров" Relationship="Self.Кто_авторизовался" FromRole="Кассир" ToRole="Авторизация_кассиров" />
-          <NavigationProperty Name="Телефон" Relationship="Self.Телефон_работника" FromRole="Кассир" ToRole="Телефон" />
         </EntityType>
         <EntityType Name="Категория_товара">
           <Key>
@@ -680,7 +769,7 @@
           <Property Name="Код_города" Type="Int32" Nullable="false" />
           <Property Name="Уникальный_номер" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Дисконтная_карта" Relationship="Self.Телефон_пользователя" FromRole="Телефон" ToRole="Дисконтная_карта" />
-          <NavigationProperty Name="Кассир" Relationship="Self.Телефон_работника" FromRole="Телефон" ToRole="Кассир" />
+          <NavigationProperty Name="Сотрудник" Relationship="IDZ_Sergeev_SupermarketModel.Телефон_работника1" FromRole="Телефон" ToRole="Сотрудник" />
         </EntityType>
         <EntityType Name="Товар">
           <Key>
@@ -705,6 +794,7 @@
           <Property Name="id_корзины" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Корзина" Relationship="Self.Список_товаров_в_корзине" FromRole="Товар_в_корзине" ToRole="Корзина" />
           <NavigationProperty Name="Товар" Relationship="Self.Товар_к_покупке" FromRole="Товар_в_корзине" ToRole="Товар" />
+          <Property Name="Цена" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="Цена">
           <Key>
@@ -743,29 +833,13 @@
         <EntityType Name="Товары">
           <Key>
             <PropertyRef Name="Код_товара" />
-            <PropertyRef Name="Наименование" />
-            <PropertyRef Name="Количество" />
-            <PropertyRef Name="Название_категории" />
-            <PropertyRef Name="Цена" />
           </Key>
           <Property Name="Код_товара" Type="Int64" Nullable="false" />
           <Property Name="Наименование" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Количество" Type="Int32" Nullable="false" />
-          <Property Name="Название_категории" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Количество" Type="Int32" Nullable="true" />
+          <Property Name="Название_категории" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" Nullable="true" />
         </EntityType>
-        <Association Name="Кто_авторизовался">
-          <End Role="Кассир" Type="Self.Кассир" Multiplicity="1" />
-          <End Role="Авторизация_кассиров" Type="Self.Авторизация_кассиров" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Кассир">
-              <PropertyRef Name="id_сотрудника" />
-            </Principal>
-            <Dependent Role="Авторизация_кассиров">
-              <PropertyRef Name="id_сотрудника" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="На_какой_кассе">
           <End Role="Касса" Type="Self.Касса" Multiplicity="1" />
           <End Role="Авторизация_кассиров" Type="Self.Авторизация_кассиров" Multiplicity="*" />
@@ -835,18 +909,6 @@
             </Principal>
             <Dependent Role="Покупка">
               <PropertyRef Name="Номер_кассы" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Телефон_работника">
-          <End Role="Телефон" Type="Self.Телефон" Multiplicity="1" />
-          <End Role="Кассир" Type="Self.Кассир" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Телефон">
-              <PropertyRef Name="id_телефона" />
-            </Principal>
-            <Dependent Role="Кассир">
-              <PropertyRef Name="id_телефона" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -946,13 +1008,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="IDZ_Sergeev_SupermarketEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="IDZ_Sergeev_SupermarketEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Авторизация_кассиров" EntityType="Self.Авторизация_кассиров" />
           <EntitySet Name="Возврат" EntityType="Self.Возврат" />
           <EntitySet Name="Дисконтная_карта" EntityType="Self.Дисконтная_карта" />
           <EntitySet Name="Касса" EntityType="Self.Касса" />
-          <EntitySet Name="Кассир" EntityType="Self.Кассир" />
           <EntitySet Name="Категория_товара" EntityType="Self.Категория_товара" />
           <EntitySet Name="Корзина" EntityType="Self.Корзина" />
           <EntitySet Name="Покупка" EntityType="Self.Покупка" />
@@ -966,10 +1027,6 @@
           <EntitySet Name="vw_АктуальнаяЦена" EntityType="Self.vw_АктуальнаяЦена" />
           <EntitySet Name="История_авторизации" EntityType="Self.История_авторизации" />
           <EntitySet Name="Товары" EntityType="Self.Товары" />
-          <AssociationSet Name="Кто_авторизовался" Association="Self.Кто_авторизовался">
-            <End Role="Кассир" EntitySet="Кассир" />
-            <End Role="Авторизация_кассиров" EntitySet="Авторизация_кассиров" />
-          </AssociationSet>
           <AssociationSet Name="На_какой_кассе" Association="Self.На_какой_кассе">
             <End Role="Касса" EntitySet="Касса" />
             <End Role="Авторизация_кассиров" EntitySet="Авторизация_кассиров" />
@@ -993,10 +1050,6 @@
           <AssociationSet Name="Где_проводилась_покупка" Association="Self.Где_проводилась_покупка">
             <End Role="Касса" EntitySet="Касса" />
             <End Role="Покупка" EntitySet="Покупка" />
-          </AssociationSet>
-          <AssociationSet Name="Телефон_работника" Association="Self.Телефон_работника">
-            <End Role="Телефон" EntitySet="Телефон" />
-            <End Role="Кассир" EntitySet="Кассир" />
           </AssociationSet>
           <AssociationSet Name="Тип_товара" Association="Self.Тип_товара">
             <End Role="Категория_товара" EntitySet="Категория_товара" />
@@ -1062,7 +1115,7 @@
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="ДобавитьИлиОбновитьТовар">
             <Parameter Name="Название" Mode="In" Type="String" />
-            <Parameter Name="Цена" Mode="In" Type="Int32" />
+            <Parameter Name="Цена" Mode="In" Type="Decimal" />
             <Parameter Name="idКатегории" Mode="In" Type="Int32" />
             <Parameter Name="Количество" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1076,6 +1129,34 @@
             <Parameter Name="НомерКассы" Mode="In" Type="Int32" />
             <Parameter Name="НомерКартыОплаты" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="Role" EntityType="IDZ_Sergeev_SupermarketModel.Role" />
+          <EntitySet Name="User" EntityType="IDZ_Sergeev_SupermarketModel.User" />
+          <EntitySet Name="Сотрудник" EntityType="IDZ_Sergeev_SupermarketModel.Сотрудник" />
+          <EntitySet Name="vw_ОтчетАктуальныеЦены" EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетАктуальныеЦены" />
+          <EntitySet Name="vw_ОтчетПоДефицитуТовара" EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоДефицитуТовара" />
+          <EntitySet Name="vw_ОтчетПоОстаткамТоваровНаСкладе" EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоОстаткамТоваровНаСкладе" />
+          <AssociationSet Name="FK_User_Role1" Association="IDZ_Sergeev_SupermarketModel.FK_User_Role1">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Сотрудник1" Association="IDZ_Sergeev_SupermarketModel.FK_User_Сотрудник1">
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Авторизация_кассиров_Сотрудник" Association="IDZ_Sergeev_SupermarketModel.FK_Авторизация_кассиров_Сотрудник">
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+            <End Role="Авторизация_кассиров" EntitySet="Авторизация_кассиров" />
+          </AssociationSet>
+          <AssociationSet Name="Телефон_работника1" Association="IDZ_Sergeev_SupermarketModel.Телефон_работника1">
+            <End Role="Телефон" EntitySet="Телефон" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
+          <FunctionImport Name="AddUser">
+            <Parameter Name="UserID" Mode="In" Type="Guid" />
+            <Parameter Name="Login" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="UserRole" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1088,12 +1169,129 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="IDZ_Sergeev_SupermarketModel.FK_User_Role1" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="Guid" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="IDZ_Sergeev_SupermarketModel.FK_User_Role1" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Сотрудник" Relationship="IDZ_Sergeev_SupermarketModel.FK_User_Сотрудник1" FromRole="User" ToRole="Сотрудник" />
+        </EntityType>
+        <EntityType Name="Сотрудник">
+          <Key>
+            <PropertyRef Name="id_сотрудника" />
+          </Key>
+          <Property Name="id_сотрудника" Type="Guid" Nullable="false" />
+          <Property Name="Фамилия" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Имя" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Отчество" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Пол" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="id_телефона" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="IDZ_Sergeev_SupermarketModel.FK_User_Сотрудник1" FromRole="Сотрудник" ToRole="User" />
+          <NavigationProperty Name="Авторизация_кассиров" Relationship="IDZ_Sergeev_SupermarketModel.FK_Авторизация_кассиров_Сотрудник" FromRole="Сотрудник" ToRole="Авторизация_кассиров" />
+          <NavigationProperty Name="Телефон" Relationship="IDZ_Sergeev_SupermarketModel.Телефон_работника1" FromRole="Сотрудник" ToRole="Телефон" />
+        </EntityType>
+        <EntityType Name="vw_ОтчетАктуальныеЦены">
+          <Key>
+            <PropertyRef Name="Код_товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Название_категории" />
+            <PropertyRef Name="Цена" />
+          </Key>
+          <Property Name="Код_товара" Type="Int64" Nullable="false" />
+          <Property Name="Наименование" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Название_категории" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Цена" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="vw_ОтчетПоДефицитуТовара">
+          <Key>
+            <PropertyRef Name="Код_товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="Код_товара" Type="Int64" Nullable="false" />
+          <Property Name="Наименование" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Количество" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_ОтчетПоОстаткамТоваровНаСкладе">
+          <Key>
+            <PropertyRef Name="Код_товара" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Название_категории" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="Код_товара" Type="Int64" Nullable="false" />
+          <Property Name="Наименование" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Название_категории" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Количество" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_Role1">
+          <End Type="IDZ_Sergeev_SupermarketModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="IDZ_Sergeev_SupermarketModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Сотрудник1">
+          <End Type="IDZ_Sergeev_SupermarketModel.Сотрудник" Role="Сотрудник" Multiplicity="1" />
+          <End Type="IDZ_Sergeev_SupermarketModel.User" Role="User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудник">
+              <PropertyRef Name="id_сотрудника" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Авторизация_кассиров_Сотрудник">
+          <End Type="IDZ_Sergeev_SupermarketModel.Сотрудник" Role="Сотрудник" Multiplicity="1" />
+          <End Type="IDZ_Sergeev_SupermarketModel.Авторизация_кассиров" Role="Авторизация_кассиров" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудник">
+              <PropertyRef Name="id_сотрудника" />
+            </Principal>
+            <Dependent Role="Авторизация_кассиров">
+              <PropertyRef Name="id_сотрудника" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Телефон_работника1">
+          <End Type="IDZ_Sergeev_SupermarketModel.Телефон" Role="Телефон" Multiplicity="1" />
+          <End Type="IDZ_Sergeev_SupermarketModel.Сотрудник" Role="Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Телефон">
+              <PropertyRef Name="id_телефона" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="id_телефона" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище IDZ_Sergeev_SupermarketModelContainer" CdmEntityContainer="IDZ_Sergeev_SupermarketEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище IDZ_Sergeev_SupermarketModelContainer" CdmEntityContainer="IDZ_Sergeev_SupermarketEntities1">
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1142,18 +1340,6 @@
               <MappingFragment StoreEntitySet="Касса">
                 <ScalarProperty Name="Номер_кассы" ColumnName="Номер кассы" />
                 <ScalarProperty Name="Касса_самообслуживания" ColumnName="Касса самообслуживания" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Кассир">
-            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.Кассир">
-              <MappingFragment StoreEntitySet="Кассир">
-                <ScalarProperty Name="id_сотрудника" ColumnName="id сотрудника" />
-                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
-                <ScalarProperty Name="Имя" ColumnName="Имя" />
-                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
-                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
-                <ScalarProperty Name="id_телефона" ColumnName="id телефона" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1235,6 +1421,7 @@
           <EntitySetMapping Name="Товар_в_корзине">
             <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.Товар_в_корзине">
               <MappingFragment StoreEntitySet="Товар в корзине">
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />
                 <ScalarProperty Name="Код_товара" ColumnName="Код товара" />
                 <ScalarProperty Name="id_корзины" ColumnName="id корзины" />
@@ -1310,6 +1497,68 @@
           <FunctionImportMapping FunctionImportName="ДобавитьИлиОбновитьТовар" FunctionName="Хранилище IDZ_Sergeev_SupermarketModel.ДобавитьИлиОбновитьТовар" />
           <FunctionImportMapping FunctionImportName="ДобавитьТоварВКорзину" FunctionName="Хранилище IDZ_Sergeev_SupermarketModel.ДобавитьТоварВКорзину" />
           <FunctionImportMapping FunctionImportName="ПровестиПокупку" FunctionName="Хранилище IDZ_Sergeev_SupermarketModel.ПровестиПокупку" />
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Сотрудник">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.Сотрудник">
+              <MappingFragment StoreEntitySet="Сотрудник">
+                <ScalarProperty Name="id_телефона" ColumnName="id телефона" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="id_сотрудника" ColumnName="id сотрудника" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ОтчетАктуальныеЦены">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.vw_ОтчетАктуальныеЦены">
+              <MappingFragment StoreEntitySet="vw_ОтчетАктуальныеЦены">
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Название_категории" ColumnName="Название категории" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Код_товара" ColumnName="Код товара" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ОтчетПоДефицитуТовара">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоДефицитуТовара">
+              <MappingFragment StoreEntitySet="vw_ОтчетПоДефицитуТовара">
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Код_товара" ColumnName="Код товара" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ОтчетПоОстаткамТоваровНаСкладе">
+            <EntityTypeMapping TypeName="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоОстаткамТоваровНаСкладе">
+              <MappingFragment StoreEntitySet="vw_ОтчетПоОстаткамТоваровНаСкладе">
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Название_категории" ColumnName="Название категории" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Код_товара" ColumnName="Код товара" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddUser" FunctionName="Хранилище IDZ_Sergeev_SupermarketModel.AddUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

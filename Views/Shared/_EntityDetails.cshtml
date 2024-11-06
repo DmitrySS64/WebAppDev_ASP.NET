@@ -1,0 +1,25 @@
+﻿@using System.ComponentModel
+@model object
+
+<div>
+    <h4>Детали сущности</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @{
+            var modelType = Model.GetType();
+            foreach (var propertyInfo in modelType.GetProperties())
+            {
+                // Отбрасываем виртуальные свойства, если не нужны (например, навигационные свойства)
+                if (!propertyInfo.GetGetMethod().IsVirtual)
+                {
+                    // Получаем DisplayName, если он установлен, иначе используем имя свойства
+                    var displayNameAttr = propertyInfo.GetCustomAttributes(typeof(DisplayNameAttribute), false).FirstOrDefault() as DisplayNameAttribute;
+                    string displayName = displayNameAttr != null ? displayNameAttr.DisplayName : propertyInfo.Name.Replace("_", " ");
+
+                    <dt>@displayName</dt>
+                    <dd>@(propertyInfo.GetValue(Model) ?? "Не указано")</dd>
+                }
+            }
+        }
+    </dl>
+</div>

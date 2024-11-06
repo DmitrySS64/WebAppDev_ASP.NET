@@ -12,23 +12,18 @@ namespace LW_1.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Кассир
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Кассир()
+        public Role()
         {
-            this.Авторизация_кассиров = new HashSet<Авторизация_кассиров>();
+            this.User = new HashSet<User>();
         }
     
-        public System.Guid id_сотрудника { get; set; }
-        public string Фамилия { get; set; }
-        public string Имя { get; set; }
-        public string Отчество { get; set; }
-        public string Пароль { get; set; }
-        public System.Guid id_телефона { get; set; }
+        public int RoleCode { get; set; }
+        public string RoleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Авторизация_кассиров> Авторизация_кассиров { get; set; }
-        public virtual Телефон Телефон { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

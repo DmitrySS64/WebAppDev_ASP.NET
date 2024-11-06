@@ -18,7 +18,7 @@ namespace LW_1.Models.Entities
         public Телефон()
         {
             this.Дисконтная_карта = new HashSet<Дисконтная_карта>();
-            this.Кассир = new HashSet<Кассир>();
+            this.Сотрудник = new HashSet<Сотрудник>();
         }
     
         public System.Guid id_телефона { get; set; }
@@ -28,6 +28,6 @@ namespace LW_1.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Дисконтная_карта> Дисконтная_карта { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Кассир> Кассир { get; set; }
+        public virtual ICollection<Сотрудник> Сотрудник { get; set; }
     }
 }

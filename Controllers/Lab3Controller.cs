@@ -13,6 +13,84 @@ namespace LW_1.Controllers
     {
         // GET: Lab3
         [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult CreateCashier()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCashier(CreateCashierVM cashier)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new IDZ_Sergeev_SupermarketEntities1())
+                {
+                    Телефон телефон = new Телефон
+                    {
+                        id_телефона = Guid.NewGuid(),
+                        Код_города = int.Parse(cashier.PhoneNumber.Substring(0, 3)),
+                        Уникальный_номер = int.Parse(cashier.PhoneNumber.Substring(3, 7))
+                    };
+                    db.Телефон.Add(телефон);
+                    Сотрудник кассир = new Сотрудник
+                    {
+                        id_сотрудника = Guid.NewGuid(),
+                        Фамилия = cashier.Фамилия,
+                        Имя = cashier.Имя,
+                        Отчество = cashier.Отчество,
+                        Дата_рождения = cashier.Дата_рождения,
+                        Пол = cashier.Пол,
+                        id_телефона = телефон.id_телефона
+                    };
+                    db.Сотрудник.Add(кассир);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ListOfCashier", "Lab2V2");
+            }
+            return View(cashier);
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "admin,manager")]
+        public ActionResult CreateProduct()
+        {
+            Dictionary<string, int> categories = new Dictionary<string, int>();
+            using (var db = new IDZ_Sergeev_SupermarketEntities1())
+            {
+                categories = db.Категория_товара.ToDictionary(x => x.Название_категории, x => x.id_категории);
+            }
+            ViewBag.Categories = new SelectList(categories, "Value", "Key");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateProduct(CreateProductVM product)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new IDZ_Sergeev_SupermarketEntities1())
+                {
+                    db.ДобавитьИлиОбновитьТовар(product.Наименование, (decimal)product.Цена, product.Id_категории, product.Количество);
+                    //db.SaveChanges();
+                }
+                return RedirectToAction("ListOfProducts", "Lab2V2");
+            }
+            Dictionary<string, int> categories = new Dictionary<string, int>();
+            using (var db = new IDZ_Sergeev_SupermarketEntities1())
+            {
+                categories = db.Категория_товара.ToDictionary(x => x.Название_категории, x => x.id_категории);
+            }
+            ViewBag.Categories = new SelectList(categories, "Value", "Key");
+
+            return View(product);
+        }
+
+        /*
+        [HttpGet]
         public ActionResult CreateGroup()
         {
             Dictionary<string, Guid> institutes = new Dictionary<string, Guid>();
@@ -123,6 +201,6 @@ namespace LW_1.Controllers
             ViewBag.S = new SelectList(s, "Item2", "Item1");
 
             return View(newStudent);
-        }
+        }*/
     }
 }

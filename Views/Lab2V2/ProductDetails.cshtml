@@ -1,0 +1,70 @@
+﻿@model LW_1.Models.Entities.Товары
+
+@{
+    ViewBag.Title = "ProductDetails";
+}
+
+<h2>ProductDetails</h2>
+
+
+
+@if (Model == null)
+{
+    <p> Товар не найден.</p>
+}
+else
+{
+    <div>
+        <h4>Товары</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Код_товара)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Код_товара)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Наименование)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Наименование)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Количество)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Количество)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Название_категории)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Название_категории)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Цена)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Цена)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "ListOfProducts", "Lab2V2")
+    </p>
+
+
+    @Html.Partial("_EntityDetails", Model)
+}

@@ -1,0 +1,15 @@
+﻿@model Tuple<string, string, List<Tuple<string, string>>>
+@*1-й элемент — имя поля, 2-й — метка, 3-й — список значений (пары: значение + текст).*@
+
+<div class="form-group">
+    @Html.Label(Model.Item1, Model.Item2, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @foreach (var option in Model.Item3)
+        {
+            <label style="margin-right: 10px;">
+                @Html.RadioButton(Model.Item1, option.Item1) @option.Item2
+            </label>
+        }
+        @Html.ValidationMessage(Model.Item1, "", new { @class = "text-danger" })
+    </div>
+</div>

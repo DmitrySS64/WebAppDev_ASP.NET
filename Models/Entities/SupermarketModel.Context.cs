@@ -15,10 +15,10 @@ namespace LW_1.Models.Entities
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class IDZ_Sergeev_SupermarketEntities : DbContext
+    public partial class IDZ_Sergeev_SupermarketEntities1 : DbContext
     {
-        public IDZ_Sergeev_SupermarketEntities()
-            : base("name=IDZ_Sergeev_SupermarketEntities")
+        public IDZ_Sergeev_SupermarketEntities1()
+            : base("name=IDZ_Sergeev_SupermarketEntities1")
         {
         }
     
@@ -32,7 +32,6 @@ namespace LW_1.Models.Entities
         public virtual DbSet<Возврат> Возврат { get; set; }
         public virtual DbSet<Дисконтная_карта> Дисконтная_карта { get; set; }
         public virtual DbSet<Касса> Касса { get; set; }
-        public virtual DbSet<Кассир> Кассир { get; set; }
         public virtual DbSet<Категория_товара> Категория_товара { get; set; }
         public virtual DbSet<Корзина> Корзина { get; set; }
         public virtual DbSet<Покупка> Покупка { get; set; }
@@ -46,6 +45,12 @@ namespace LW_1.Models.Entities
         public virtual DbSet<vw_АктуальнаяЦена> vw_АктуальнаяЦена { get; set; }
         public virtual DbSet<История_авторизации> История_авторизации { get; set; }
         public virtual DbSet<Товары> Товары { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Сотрудник> Сотрудник { get; set; }
+        public virtual DbSet<vw_ОтчетАктуальныеЦены> vw_ОтчетАктуальныеЦены { get; set; }
+        public virtual DbSet<vw_ОтчетПоДефицитуТовара> vw_ОтчетПоДефицитуТовара { get; set; }
+        public virtual DbSet<vw_ОтчетПоОстаткамТоваровНаСкладе> vw_ОтчетПоОстаткамТоваровНаСкладе { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -150,7 +155,7 @@ namespace LW_1.Models.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int ДобавитьИлиОбновитьТовар(string название, Nullable<int> цена, Nullable<int> idКатегории, Nullable<int> количество)
+        public virtual int ДобавитьИлиОбновитьТовар(string название, Nullable<decimal> цена, Nullable<int> idКатегории, Nullable<int> количество)
         {
             var названиеParameter = название != null ?
                 new ObjectParameter("Название", название) :
@@ -158,7 +163,7 @@ namespace LW_1.Models.Entities
     
             var ценаParameter = цена.HasValue ?
                 new ObjectParameter("Цена", цена) :
-                new ObjectParameter("Цена", typeof(int));
+                new ObjectParameter("Цена", typeof(decimal));
     
             var idКатегорииParameter = idКатегории.HasValue ?
                 new ObjectParameter("idКатегории", idКатегории) :
@@ -199,6 +204,27 @@ namespace LW_1.Models.Entities
                 new ObjectParameter("НомерКартыОплаты", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ПровестиПокупку", idКорзиныParameter, номерКассыParameter, номерКартыОплатыParameter);
+        }
+    
+        public virtual int AddUser(Nullable<System.Guid> userID, string login, string password, Nullable<int> userRole)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(System.Guid));
+    
+            var loginParameter = login != null ?
+                new ObjectParameter("Login", login) :
+                new ObjectParameter("Login", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var userRoleParameter = userRole.HasValue ?
+                new ObjectParameter("UserRole", userRole) :
+                new ObjectParameter("UserRole", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddUser", userIDParameter, loginParameter, passwordParameter, userRoleParameter);
         }
     }
 }

@@ -3,6 +3,11 @@
 }
 @model List<Type>
 
+@{
+    var userRole = User.IsInRole("admin") ? "admin" : User.IsInRole("manager") ? "manager" : User.IsInRole("cashier") ? "cashier" : "";
+    var isAuthenticated = User.Identity.IsAuthenticated;
+}
+
 <main>
     @*<section class="row" aria-labelledby="aspnetTitle">
             <h1 id="title">ASP.NET</h1>
@@ -54,12 +59,36 @@
                             <div>
                                 @foreach (var methodInfo in controllerType.GetMethods())
                                 {
-                                    if (methodInfo.ReturnType == typeof(ActionResult))
+                                    if (methodInfo.ReturnType == typeof(ActionResult) &&
+                                        methodInfo.GetCustomAttributes(typeof(HttpPostAttribute), false).Length == 0)
                                     {
-                                        var actionName = methodInfo.Name;
-                                        <a href="@Url.Action(actionName, controllerName)" class="btn btn-primary btn-md">
-                                            @actionName
-                                        </a>
+                                        var authorizeAttr = methodInfo.GetCustomAttributes(typeof(AuthorizeAttribute), false).FirstOrDefault() as AuthorizeAttribute;
+
+                                        // Фильтрация для авторизованных пользователей и по роли
+                                        bool canAccess = true;
+                                        // Если метод требует авторизации, проверяем доступ для текущего пользователя
+                                        if (authorizeAttr != null)
+                                        {
+                                            // Метод требует авторизацию, но пользователь не авторизован
+                                            if (!isAuthenticated)
+                                            {
+                                                canAccess = false;
+                                            }
+                                            else if (!string.IsNullOrEmpty(authorizeAttr.Roles))
+                                            {
+                                                // Метод требует определенные роли, проверяем роль пользователя
+                                                var requiredRoles = authorizeAttr.Roles.Split(',');
+                                                canAccess = requiredRoles.Contains(userRole);
+                                            }
+                                        }
+
+                                        if (canAccess)
+                                        {
+                                            var actionName = methodInfo.Name;
+                                            <a href="@Url.Action(actionName, controllerName)" class="btn btn-primary btn-md">
+                                                @actionName
+                                            </a>
+                                        }
                                     }
                                 }
                             </div>
@@ -68,6 +97,8 @@
                 }
             </tbody>
         </table>
-
+    </section>
+    <section class="list-group-item m-3">
+        @Html.Action("ListOfCashiersPartialView", "Lab2V2")
     </section>
 </main>

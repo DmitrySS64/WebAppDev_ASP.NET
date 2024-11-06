@@ -20,7 +20,7 @@ namespace LW_1.Models.Entities
         public int Номер_кассы { get; set; }
         public System.Guid id_сотрудника { get; set; }
     
-        public virtual Кассир Кассир { get; set; }
         public virtual Касса Касса { get; set; }
+        public virtual Сотрудник Сотрудник { get; set; }
     }
 }

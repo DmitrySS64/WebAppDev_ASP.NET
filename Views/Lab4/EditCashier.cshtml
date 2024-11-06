@@ -1,0 +1,106 @@
+﻿@model LW_1.Models.ViewModels.CashierVM
+
+@{
+    ViewBag.Title = "EditCashier";
+}
+
+<h2>EditCashier</h2>
+
+@if (Model != null)
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>CashierVM</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.PhoneNumberID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.Id
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Фамилия, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Фамилия, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Фамилия, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Имя, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Имя, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Имя, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Отчество, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Отчество, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Отчество, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Дата_рождения, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Дата_рождения, new { htmlAttributes = new { @class = "form-control", type = "datetime" } })
+                @Html.ValidationMessageFor(model => model.Дата_рождения, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*@Html.Partial("_RadioButtonGroup",
+            Tuple.Create("Пол", "Пол",
+            new List<Tuple<string, string>>
+            {
+                Tuple.Create("м", "Мужской"),
+                Tuple.Create("ж", "Женский"),
+                Tuple.Create("", "Не указан")
+            }
+            )
+        )*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Пол, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Пол, "м", new { @style = "margin-top: 10px;" }) Мужской
+                @Html.RadioButtonFor(model => model.Пол, "ж", new { @style = "margin-top: 10px; margin-left: 10px;" }) Женский
+                @Html.RadioButtonFor(model => model.Пол, "", new { @style = "margin-top: 10px; margin-left: 10px;" }) Не указан
+                @Html.ValidationMessageFor(model => model.Пол, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.PhoneNumber
+                @Html.ActionLink("Edit number", "EditNumber")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+}
+else
+{
+    <p>Объект не найден</p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListOfCashier", "Lab2V2")
+</div>

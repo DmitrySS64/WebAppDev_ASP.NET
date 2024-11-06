@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,6 +14,78 @@ namespace LW_1.Controllers
     public class Lab4Controller : Controller
     {
         // GET: Lab4
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult EditCashier(Guid? cashierId)
+        {
+            if (cashierId == null) return View();
+            CashierVM model;
+            using (var db = new IDZ_Sergeev_SupermarketEntities1())
+            {
+                Сотрудник кассир = db.Сотрудник.Find(cashierId);
+                Телефон телефон = db.Телефон.Find(кассир.id_телефона);
+                model = new CashierVM(кассир);
+                model.PhoneNumber = $"+7 {телефон.Код_города:D3}-{телефон.Уникальный_номер:D7}";
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken()]
+        public ActionResult EditCashier(CashierVM cashier)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new IDZ_Sergeev_SupermarketEntities1())
+                {
+                    Сотрудник кассир = db.Сотрудник.Find(cashier.Id);
+                    if (кассир == null) { return HttpNotFound(); }
+                    кассир.Фамилия = cashier.Фамилия;
+                    кассир.Имя = cashier.Имя;
+                    кассир.Отчество = cashier.Отчество;
+                    кассир.Дата_рождения = cashier.Дата_рождения;
+                    кассир.Пол = cashier.Пол;
+
+                    db.Сотрудник.Attach(кассир);
+                    db.Entry(кассир).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("CashierDetails", "Lab2V2", new { cashierId = cashier.Id });
+            }
+            return View(cashier);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteCashier(Guid? id)
+        {
+            if (id == null) return HttpNotFound();
+            CashierVM cashier;
+            using (var db = new IDZ_Sergeev_SupermarketEntities1())
+            {
+                Сотрудник кассир = db.Сотрудник.Find(id);
+                cashier = new CashierVM(кассир);
+            }
+            return View(cashier);
+        }
+
+        [HttpPost, ActionName("DeleteCashier")]
+        public ActionResult DeleteCashierConfirmed(Guid id)
+        {
+            using (var context = new IDZ_Sergeev_SupermarketEntities1())
+            {
+                Сотрудник сashierToDelete = new Сотрудник
+                {
+                    id_сотрудника = id
+                };
+                context.Entry(сashierToDelete).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+            return RedirectToAction("ListOfCashier", "Lab2V2");
+        }
+
+        /*
         [HttpGet]
         public ActionResult EditGroup(Guid? groupID)
         {
@@ -202,6 +276,6 @@ namespace LW_1.Controllers
                 context.SaveChanges();
             }
             return RedirectToAction("ListGroup", "Lab2");
-        }
+        }*/
     }
 }

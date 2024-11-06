@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LW_1.Models.Entities.Товары>
+
+@{
+    ViewBag.Title = "ListOfProducts";
+}
+
+<h2>ListOfProducts</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateProduct", "Lab3")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Код_товара)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Наименование)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Количество)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Название_категории)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Цена)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Код_товара)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Наименование)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Количество)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Название_категории)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Цена)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "ProductDetails", "Lab2V2", new { id=item.Код_товара }, null) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

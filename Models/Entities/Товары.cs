@@ -16,8 +16,8 @@ namespace LW_1.Models.Entities
     {
         public long Код_товара { get; set; }
         public string Наименование { get; set; }
-        public int Количество { get; set; }
+        public Nullable<int> Количество { get; set; }
         public string Название_категории { get; set; }
-        public decimal Цена { get; set; }
+        public Nullable<decimal> Цена { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace LW_1.Models.Entities
         public int Количество { get; set; }
         public long Код_товара { get; set; }
         public System.Guid id_корзины { get; set; }
+        public decimal Цена { get; set; }
     
         public virtual Корзина Корзина { get; set; }
         public virtual Товар Товар { get; set; }

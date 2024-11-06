@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eed0fc70c31747fca990608e0f21ba03" Name="Diagram1">
+      <Diagram DiagramId="a7b7eb705f514bb69e01940f79b7cb34" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Авторизация_кассиров" Width="1.5" PointX="10" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Возврат" Width="1.5" PointX="13" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Дисконтная_карта" Width="1.5" PointX="8.75" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Касса" Width="1.5" PointX="7.75" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Кассир" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Категория_товара" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Корзина" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Покупка" Width="1.5" PointX="11" PointY="6.875" IsExpanded="true" />
@@ -22,16 +21,14 @@
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Товар_в_корзине" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Цена" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.vw_АктуальнаяЦена" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.История_авторизации" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Товары" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Кто_авторизовался" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.История_авторизации" Width="1.5" PointX="10.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Товары" Width="1.5" PointX="10.875" PointY="3.125" IsExpanded="true" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.На_какой_кассе" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.На_какой_кассе_возврат" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.С_какой_покупки" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Наличие_скидки" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Телефон_пользователя" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Где_проводилась_покупка" ManuallyRouted="false" />
-        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Телефон_работника" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Тип_товара" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Список_покупок" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Список_товаров_в_корзине" ManuallyRouted="false" />
@@ -40,6 +37,16 @@
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Товаров_на_складе" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Стоит" ManuallyRouted="false" />
         <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Товар_к_покупке" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Role" Width="1.5" PointX="9.125" PointY="25.625" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.User" Width="1.5" PointX="11.375" PointY="21.25" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.Сотрудник" Width="1.5" PointX="9.125" PointY="21" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетАктуальныеЦены" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоДефицитуТовара" Width="1.5" PointX="2.75" PointY="11.75" />
+        <EntityTypeShape EntityType="IDZ_Sergeev_SupermarketModel.vw_ОтчетПоОстаткамТоваровНаСкладе" Width="1.5" PointX="8.875" PointY="3" />
+        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.FK_User_Role1" />
+        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.FK_User_Сотрудник1" />
+        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.FK_Авторизация_кассиров_Сотрудник" />
+        <AssociationConnector Association="IDZ_Sergeev_SupermarketModel.Телефон_работника1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

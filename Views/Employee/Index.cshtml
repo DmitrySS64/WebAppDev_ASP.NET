@@ -1,0 +1,122 @@
+﻿@model IEnumerable<LW_1.Models.Entities.Сотрудник>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<h2>@ViewBag.Title</h2>
+<div id="modDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div id="dialogContent" class="modal-dialog" role="document">
+    </div>
+</div>
+
+<form method="get" action="@Url.Action("Index", "Employee")" class="form-inline">
+    <div class="form-group">
+        <input type="text" name="searchQuery" class="form-control" placeholder="Введите данные для поиска..." value="@Request.QueryString["searchQuery"]" />
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </div>
+</form>
+<hr />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_сотрудника)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Фамилия)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Имя)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Отчество)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Дата_рождения)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Пол)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_телефона)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_сотрудника)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Фамилия)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Имя)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Отчество)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Дата_рождения)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Пол)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_телефона)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id_сотрудника }, new {@class = "item"}) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="7" class="text-center">Нет сотрудников, удовлетворяющих условиям поиска</td>
+        </tr>
+    }
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+            // Загрузка окна подтверждения удаления
+            $('#dialogContent').on('click', '#deleteBtn', function () {
+                var id = $(this).data('id');
+                $.get('@Url.Action("Delete", "Employee")', { id: id }, function (data) {
+                    $('#dialogContent').html(data);
+                });
+            });
+            // Подтверждение удаления
+            $('#dialogContent').on('click', '#confirmDeleteBtn', function () {
+                var id = $(this).data('id');
+                $.post('@Url.Action("DeleteConfirmed", "Employee")', { id: id }, function () {
+                    $('#modDialog').modal('hide');
+                    location.reload(); // Перезагрузка страницы после удаления
+                });
+            });
+        })
+    </script>
+}
+

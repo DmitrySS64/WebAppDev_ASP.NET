@@ -1,0 +1,53 @@
+﻿@using System.ComponentModel
+@using LW_1.Models.ViewModels
+@model Tuple<object, IEnumerable<LW_1.Models.ViewModels.ActionButton>>
+
+<div class="modal-content" style="background-color:white">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modalLabel">Детали</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            @{
+                var modelType = Model.Item1.GetType();
+                foreach (var propertyInfo in modelType.GetProperties())
+                {
+                    // Отбрасываем виртуальные свойства, если не нужны (например, навигационные свойства)
+                    if (!propertyInfo.GetGetMethod().IsVirtual)
+                    {
+                        // Получаем DisplayName, если он установлен, иначе используем имя свойства
+                        var displayNameAttr = propertyInfo.GetCustomAttributes(typeof(DisplayNameAttribute), false).FirstOrDefault() as DisplayNameAttribute;
+                        string displayName = displayNameAttr != null ? displayNameAttr.DisplayName : propertyInfo.Name.Replace("_", " ");
+
+                        <dt>@displayName</dt>
+                        <dd>@(propertyInfo.GetValue(Model.Item1) ?? "Не указано")</dd>
+                    }
+                }
+            }
+        </dl>
+    </div>
+    <div class="model-footer">
+        @{ 
+            var userRole = User.IsInRole("admin") ? ERole.admin : (User.IsInRole("manager") ? ERole.manager : ERole.cashier);
+            foreach (var button in Model.Item2)
+            {
+                foreach (var role in button.Roles)
+                {
+                    if (role == userRole)
+                    {
+                        <button type="button" class="btn @((button.Method == "Delete") ? "btn-danger" : "btn-primary")"
+                                data-id="@button.Parameters.GetType().GetProperty("id").GetValue(button.Parameters)"
+                                data-action="@Url.Action(button.Method, button.Controller, button.Parameters)">@button.Text</button>
+                        <a href="@Url.Action(button.Method, button.Controller, button.Parameters)" class="btn btn-secondary">@button.Text</a>
+                        break;
+                    }
+                }
+            }
+        }
+        @*<button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-danger">Delete</button>*@
+    </div>
+</div>
